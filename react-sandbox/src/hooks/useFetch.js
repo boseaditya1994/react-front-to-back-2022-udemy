@@ -1,29 +1,29 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 function useFetch(url, options) {
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(url, options)
-        const data = await response.json()
+        const response = await fetch(url, options);
+        const data = await response.json();
 
-        setData(data)
-        setLoading(false)
+        setData(data);
+        setLoading(false);
       } catch (error) {
-        setError(error)
-        setLoading(false)
+        setError(error);
+        setLoading(false);
       }
-    }
+    };
 
-    fetchData()
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
-  return { data, loading, error }
+  return { data, loading, error };
 }
 
-export default useFetch
+export default useFetch;
