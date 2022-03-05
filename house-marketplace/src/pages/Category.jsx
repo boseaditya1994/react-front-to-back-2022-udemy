@@ -7,14 +7,14 @@ import {
   where,
   orderBy,
   limit,
-  startAfter,
+  startAfter
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
 
-function Offers() {
+function Category() {
   const [listings, setListings] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +27,7 @@ function Offers() {
 
         const q = query(
           listingRef,
-          where("offer", "==", true),
+          where("type", "==", params.categoryName),
           orderBy("timestamp", "desc"),
           limit(10)
         );
@@ -51,11 +51,15 @@ function Offers() {
       }
     };
     fetchListings();
-  }, []);
+  }, [params.categoryName]);
   return (
     <div className="category">
       <header className="pageHeader">
-        <p className="pageHeader">Offers</p>
+        <p className="pageHeader">
+          {params.categoryName === "rent"
+            ? "Places for rent"
+            : "Places for sale"}
+        </p>
       </header>
       {loading ? (
         <Spinner></Spinner>
@@ -64,20 +68,16 @@ function Offers() {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <ListingItem
-                  listing={listing.data}
-                  id={listing.id}
-                  key={listing.id}
-                ></ListingItem>
+                <ListingItem listing={listing.data} id={listing.id} key={listing.id}></ListingItem>
               ))}
             </ul>
           </main>
         </>
       ) : (
-        <p>There are no current offers</p>
+        <p>No listings for {params.categoryName}</p>
       )}
     </div>
   );
 }
 
-export default Offers;
+export default Category;
