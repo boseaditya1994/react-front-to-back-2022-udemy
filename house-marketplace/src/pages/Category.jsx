@@ -7,12 +7,13 @@ import {
   where,
   orderBy,
   limit,
-  startAfter
+  startAfter,
 } from "firebase/firestore";
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../components/Spinner";
 import ListingItem from "../components/ListingItem";
+import Listing from "../pages/Listing";
 
 function Category() {
   const [listings, setListings] = useState(null);
@@ -68,7 +69,11 @@ function Category() {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <ListingItem listing={listing.data} id={listing.id} key={listing.id}></ListingItem>
+                <ListingItem
+                  listing={listing.data}
+                  id={listing.id}
+                  key={listing.id}
+                ></ListingItem>
               ))}
             </ul>
           </main>
